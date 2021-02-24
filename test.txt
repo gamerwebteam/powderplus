@@ -161,13 +161,13 @@ confiEle()
 end)
 ul:action(function()
 interface.closeWindow(menus)
-local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/version.txt%22")
+local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/version.txt")
 while req:status() == "running" do
     socket.sleep(0.1)
 end
 local test = req:finish()
 if ver ~= test then
-local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/test.txt%22")
+local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/test.txt")
 while req:status() == "running" do
     socket.sleep(0.1)
 end
