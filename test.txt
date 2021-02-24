@@ -201,13 +201,6 @@ confiEle()
 end)
 ul:action(function()
 interface.closeWindow(menus)
-local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/version.txt")
-while req:status() == "running" do
-    socket.sleep(0.1)
-end
-local test = req:finish()
-if test ~= "ver3" then
-local t2 = test
 local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/test.txt")
 while req:status() == "running" do
     socket.sleep(0.1)
@@ -216,13 +209,10 @@ local test = req:finish()
 f=io.open("scripts/powderplus.lua","w")
 f:write(test)
 f:close()
-print("PowderPlus has updated. To apply the updates,")
+print("PowderPlus has updated (if one was available). To apply the updates,")
 print("go to the script manager, and untick this version of PowderPlus.")
 print("Then, tick powderplus.lua and restart.")
 print("If you have already updated PowderPlus previously, just restart.")
-else
-print("PowderPlus is up to date.")
-end
 end)
 local function toggle(a,c, d, e)
 if a=="p" and d==256 then
