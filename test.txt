@@ -160,7 +160,7 @@ f:close()
 confiEle()
 end)
 ul:action(function()
-interface:closeWindow(menus)
+interface.closeWindow(menus)
 local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/version.txt%22")
 while req:status() == "running" do
     socket.sleep(0.1)
