@@ -1,0 +1,7 @@
+This is a test.
+If this file gets downloaded by PowderPlus
+And it is arranged in this way
+Then that means
+That the test was a success
+And we can not only build an auto updater
+But potentially a new script manager
