@@ -165,7 +165,7 @@ while req:status() == "running" do
     socket.sleep(0.1)
 end
 local test = req:finish()
-if test = ver3 then
+if test = "ver3" then
 local t2 = test
 local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/test.txt")
 while req:status() == "running" do
