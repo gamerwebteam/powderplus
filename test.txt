@@ -1,14 +1,26 @@
 --Copyleft 2014-2021 Gamerweb Incorporated
 --This code can be copied in any way needed.
 local menus = Window:new(80,60,400,150)
+local menus2 = Window:new(80,60,400,150)
 local SETTINGPATH = "PowderPlus"
 local NEWFOLD = "/"
 local apply = Button:new(5, 130, 110, 16, "Apply and Exit")
 local el = Button:new(5, 80, 110, 16, "More Elements: ON")
+local more2 = Button:new(5, 30, 110, 16, "More!")
+local sc1 = Label:new(5, 20, 110, 16, "Massive Bombs")
+local sc1a = Label:new(5, 20, 20, 16, "OFF")
+local sc1b = Button:new(110, 20, 50, 16, "Add/update")
+local sc1c = Button:new(170, 20, 50, 16, "Delete")
 local ul = Button:new(5, 50, 110, 16, "Check for Updates")
 local ex = Button:new(120, 130, 110, 16, "Revert and Exit")
+local ex2 = Button:new(120, 130, 110, 16, "Exit")
+menus2:addComponent(sc1)
+menus2:addComponent(sc1c)
+menus2:addComponent(sc1b)
+menus2:addComponent(ex2)
 menus:addComponent(apply)
 menus:addComponent(el)
+menus:addComponent(more2)
 menus:addComponent(ul)
 menus:addComponent(ex)
 local petrol = elements.allocate("PLUS", "PET")
@@ -145,6 +157,12 @@ f:write("false")
 hidEl = "false"
 f:close()
 end
+if fs.exists(SETTINGPATH..NEWFOLD.."MoreBombs.lua") then
+dofile(SETTINGPATH..NEWFOLD.."MoreBombs.lua")
+local morebombs = 1
+else
+local morebombs = 0
+end
 f = io.open(SETTINGPATH..NEWFOLD.."fpsop.pplus","r")
 currentfps = f:read()
 tpt.setfpscap(currentfps)
@@ -157,6 +175,9 @@ menus:addComponent(fpsb)
 print("Use ALT+P to open menu")
 ex:action(function()
 interface.closeWindow(menus)
+end)
+ex2:action(function()
+interface.closeWindow(menus2)
 end)
 el:action(function()
 if hidEl == "true" then
@@ -199,6 +220,36 @@ f:write(hidEl)
 f:close()
 confiEle()
 end)
+function runscriptCheck()
+if fs.exists(SETTINGPATH..NEWFOLD.."MoreBombs.lua") then
+sc1:text("MoreBombs: ON")
+else
+sc1:text("MoreBombs: OFF")
+end
+end
+sc1c:action(function()
+if fs.exists(SETTINGPATH..NEWFOLD.."MoreBombs.lua") then
+fs.removeFile(SETTINGPATH..NEWFOLD.."MoreBombs.lua")
+interface.closeWindow(menus2)
+print("More Bombs script removed.")
+print("Restart to stop the script.")
+else
+print("The script doesn't exist")
+end
+end)
+sc1b:action(function()
+local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/mb.txt")
+while req:status() == "running" do
+    socket.sleep(0.1)
+end
+local test = req:finish()
+f=io.open(SETTINGPATH..NEWFOLD.."MoreBombs.lua","w")
+f:write(test)
+f:close()
+dofile(SETTINGPATH..NEWFOLD.."MoreBombs.lua","w")
+print("PowderPlus has installed More Bombs (or updated)")
+runscriptCheck()
+end)
 ul:action(function()
 interface.closeWindow(menus)
 local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/test.txt")
@@ -236,3 +287,8 @@ tpt.el.embr.menu=1
 tpt.el.embr.menusection=6
 tpt.el.vrss.menu=1
 tpt.el.vrss.menusection=9
+more2:action(function()
+interface.showWindow(menus2)
+interface.closeWindow(menus)
+runscriptCheck()
+end)
