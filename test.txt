@@ -1,6 +1,6 @@
 --Copyleft 2014-2021 Gamerweb Incorporated
 --This code can be copied in any way needed.
-local ver = "00"
+local ver = "ver0"
 local menus = Window:new(80,60,400,150)
 local SETTINGPATH = "PowderPlus"
 local NEWFOLD = "/"
