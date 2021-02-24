@@ -206,7 +206,7 @@ while req:status() == "running" do
     socket.sleep(0.1)
 end
 local test = req:finish()
-if test == "ver4" then
+if test ~= "ver3" then
 local t2 = test
 local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/test.txt")
 while req:status() == "running" do
@@ -216,8 +216,6 @@ local test = req:finish()
 f=io.open("scripts/powderplus.lua","w")
 f:write(test)
 f:close()
-print("Current Version: ver3")
-print("New Version: ver4")
 print("PowderPlus has updated. To apply the updates,")
 print("go to the script manager, and untick this version of PowderPlus.")
 print("Then, tick powderplus.lua and restart.")
