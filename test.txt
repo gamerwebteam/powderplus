@@ -1,7 +1,207 @@
-This is a test.
-If this file gets downloaded by PowderPlus
-And it is arranged in this way
-Then that means
-That the test was a success
-And we can not only build an auto updater
-But potentially a new script manager
+--Copyleft 2014-2021 Gamerweb Incorporated
+--This code can be copied in any way needed.
+local ver = "00"
+local menus = Window:new(80,60,400,150)
+local SETTINGPATH = "PowderPlus"
+local NEWFOLD = "/"
+local apply = Button:new(5, 130, 110, 16, "Apply and Exit")
+local el = Button:new(5, 80, 110, 16, "More Elements: ON")
+local ul = Button:new(5, 50, 110, 16, "Check for Updates")
+local ex = Button:new(120, 130, 110, 16, "Revert and Exit")
+menus:addComponent(apply)
+menus:addComponent(el)
+menus:addComponent(ul)
+menus:addComponent(ex)
+local petrol = elements.allocate("PLUS", "PET")
+elements.element(elements.PLUS_PT_PET, elements.element(elements.DEFAULT_PT_GEL))
+local petrol = elements.allocate("PLUS", "PICE")
+elements.element(elements.PLUS_PT_PICE, elements.element(elements.DEFAULT_PT_SNOW))
+elements.property(elements.PLUS_PT_PET, "Name", "PTRL")
+elements.property(elements.PLUS_PT_PET, "Description", "Petroleum (gasoline). Highly flammable liquid which is somewhat explosive. Automatically combusts around ~60C.")
+elements.property(elements.PLUS_PT_PET, "Colour", 0x9a9a00)
+elements.property(elements.PLUS_PT_PET, "MenuSection", 5)
+elements.property(elements.PLUS_PT_PET, "Flammable", 75)
+elements.property(elements.PLUS_PT_PET, "Explosive", 27)
+elements.property(elements.PLUS_PT_PET, "Weight", 100)
+elements.property(elements.PLUS_PT_PET, "HighTemperature", 340)
+elements.property(elements.PLUS_PT_PET, "LowTemperature", 200)
+elements.property(elements.PLUS_PT_PET, "HeatConduct", 100)
+elements.property(elements.PLUS_PT_PET, "HighTemperatureTransition", elements.DEFAULT_PT_FIRE)
+elements.property(elements.PLUS_PT_PET, "LowTemperatureTransition", elements.PLUS_PT_PICE)
+elements.property(elements.PLUS_PT_PICE, "Name", "PICE")
+elements.property(elements.PLUS_PT_PICE, "Description", "Petroleum ice. Very soft material. ")
+elements.property(elements.PLUS_PT_PICE, "Colour", 0xaaaa00)
+elements.property(elements.PLUS_PT_PICE, "MenuSection", 8)
+elements.property(elements.PLUS_PT_PICE, "Weight", 100)
+elements.property(elements.PLUS_PT_PICE, "HighTemperature", 201)
+elements.property(elements.PLUS_PT_PICE, "Temperature", 180)
+elements.property(elements.PLUS_PT_PICE, "HeatConduct", 100)
+elements.property(elements.PLUS_PT_PICE, "HighTemperatureTransition", elements.PLUS_PT_PET)
+local ash = elements.allocate("PLUS", "ASH")
+elements.element(elements.PLUS_PT_ASH, elements.element(elements.DEFAULT_PT_BRMT))
+elements.property(elements.PLUS_PT_ASH, "Name", "CRBN")
+elements.property(elements.PLUS_PT_ASH, "Description", "Carbon. Created when organic insulators such as Starlite break down from heat. Flammable and highly conductive.")
+elements.property(elements.PLUS_PT_ASH, "Colour", 0x4a4a4a)
+elements.property(elements.PLUS_PT_ASH, "MenuSection", 8)
+elements.property(elements.PLUS_PT_ASH, "Flammable", 55)
+elements.property(elements.PLUS_PT_ASH, "Weight", 100)
+elements.property(elements.PLUS_PT_ASH, "HighTemperature", 2200)
+elements.property(elements.PLUS_PT_ASH, "HeatConduct", 100)
+elements.property(elements.PLUS_PT_ASH, "HighTemperatureTransition", elements.DEFAULT_PT_FIRE)
+local star = elements.allocate("PLUS", "STAR")
+elements.element(elements.PLUS_PT_STAR, elements.element(elements.DEFAULT_PT_METL))
+elements.property(elements.PLUS_PT_STAR, "Name", "STAR")
+elements.property(elements.PLUS_PT_STAR, "Description", "Starlite. A very powerful and flame retardant insulator. Does not block heat perfectly and conducts electricity.")
+elements.property(elements.PLUS_PT_STAR, "Colour", 0x2a2727)
+elements.property(elements.PLUS_PT_STAR, "MenuSection", 9)
+elements.property(elements.PLUS_PT_STAR, "Weight", 100)
+elements.property(elements.PLUS_PT_STAR, "HighTemperature", 2048)
+elements.property(elements.PLUS_PT_STAR, "HeatConduct", 1)
+elements.property(elements.PLUS_PT_STAR, "HighTemperatureTransition", elements.PLUS_PT_ASH)
+local cob = elements.allocate("PLUS", "CBLT")
+elements.element(elements.PLUS_PT_CBLT, elements.element(elements.DEFAULT_PT_METL))
+elements.property(elements.PLUS_PT_CBLT, "Name", "CBLT")
+elements.property(elements.PLUS_PT_CBLT, "Description", "Cobalt. A bluey-gray metal with a decent melting point.")
+elements.property(elements.PLUS_PT_CBLT, "Colour", 0x3a3a74)
+elements.property(elements.PLUS_PT_CBLT, "MenuSection", 9)
+elements.property(elements.PLUS_PT_CBLT, "Weight", 100)
+elements.property(elements.PLUS_PT_CBLT, "HighTemperature", 3098)
+local nickel = elements.allocate("PLUS", "NICK")
+elements.element(elements.PLUS_PT_NICK, elements.element(elements.DEFAULT_PT_METL))
+elements.property(elements.PLUS_PT_NICK, "Name", "NICK")
+elements.property(elements.PLUS_PT_NICK, "Description", "Nickel. An iron-like metal with a lower melting point.")
+elements.property(elements.PLUS_PT_NICK, "Colour", 0x7e7a74)
+elements.property(elements.PLUS_PT_NICK, "MenuSection", 9)
+elements.property(elements.PLUS_PT_NICK, "Weight", 100)
+elements.property(elements.PLUS_PT_NICK, "HighTemperature", 1355)
+function confiEle()
+if hidEl == "true" then
+elements.property(elements.PLUS_PT_PET, "MenuVisible", 0)
+elements.property(elements.PLUS_PT_PICE, "MenuVisible", 0)
+elements.property(elements.PLUS_PT_CBLT, "MenuVisible", 0)
+elements.property(elements.PLUS_PT_NICK, "MenuVisible", 0)
+elements.property(elements.PLUS_PT_STAR, "MenuVisible", 0)
+elements.property(elements.PLUS_PT_ASH, "MenuVisible", 0)
+else
+elements.property(elements.PLUS_PT_PET, "MenuVisible", 1)
+elements.property(elements.PLUS_PT_PICE, "MenuVisible", 1)
+elements.property(elements.PLUS_PT_CBLT, "MenuVisible", 1)
+elements.property(elements.PLUS_PT_NICK, "MenuVisible", 1)
+elements.property(elements.PLUS_PT_STAR, "MenuVisible", 1)
+elements.property(elements.PLUS_PT_ASH, "MenuVisible", 1)
+end
+end
+if not fs.exists(SETTINGPATH) then
+fs.makeDirectory(SETTINGPATH)
+end
+if not fs.exists(SETTINGPATH..NEWFOLD.."fpsop.pplus") then
+f=io.open(SETTINGPATH..NEWFOLD.."fpsop.pplus","w")
+f:write("24")
+f:close()
+end
+if not fs.exists(SETTINGPATH..NEWFOLD.."elementshid.pplus") then
+f=io.open(SETTINGPATH..NEWFOLD.."elementshid.pplus","w")
+f:write("false")
+hidEl = "false"
+f:close()
+end
+f = io.open(SETTINGPATH..NEWFOLD.."fpsop.pplus","r")
+currentfps = f:read()
+tpt.setfpscap(currentfps)
+f:close()
+f = io.open(SETTINGPATH..NEWFOLD.."elementshid.pplus","r")
+hidEl = f:read()
+f:close()
+local fpsb = Textbox:new(5, 100, 110, 16, "FPS")
+menus:addComponent(fpsb)
+print("Use ALT+P to open menu")
+ex:action(function()
+interface.closeWindow(menus)
+end)
+el:action(function()
+if hidEl == "true" then
+hidEl = "false"
+el:text("More Elements: ON")
+else
+hidEl = "true"
+el:text("More Elements: OFF")
+end
+end)
+confiEle()
+apply:action(function()
+interface.closeWindow(menus)
+local a = tonumber(fpsb:text())
+if a then
+if a < 10 then
+tpt.setfpscap(10)
+f=io.open(SETTINGPATH..NEWFOLD.."fpsop.pplus","w")
+f:write("10")
+f:close()
+currentfps = 10
+end
+if a > 500 then
+tpt.setfpscap(500)
+f=io.open(SETTINGPATH..NEWFOLD.."fpsop.pplus","w")
+f:write("500")
+f:close()
+currentfps = 500
+end
+if a > 10 and a < 500 then
+tpt.setfpscap(a)
+f=io.open(SETTINGPATH..NEWFOLD.."fpsop.pplus","w")
+f:write(a)
+f:close()
+currentfps = a
+end
+end
+f=io.open(SETTINGPATH..NEWFOLD.."elementshid.pplus","w")
+f:write(hidEl)
+f:close()
+confiEle()
+end)
+ul:action(function()
+interface:closeWindow(menus)
+local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/version.txt%22")
+while req:status() == "running" do
+    socket.sleep(0.1)
+end
+local test = req:finish()
+if ver ~= test then
+local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/test.txt%22")
+while req:status() == "running" do
+    socket.sleep(0.1)
+end
+local test = req:finish()
+f=io.open("scripts/powderplus.lua","w")
+f:write(test)
+f:close()
+print("PowderPlus has updated. To apply the updates,")
+print("go to the script manager, and untick this version of PowderPlus.")
+print("Then, tick powderplus.lua and restart.")
+print("If you have already updated PowderPlus previously, just restart.")
+else
+print("PowderPlus is up to date.")
+end
+end)
+local function toggle(a,c, d, e)
+if a=="p" and d==256 then
+interface.showWindow(menus)
+f = io.open(SETTINGPATH..NEWFOLD.."elementshid.pplus","r")
+hidEl = f:read()
+f:close()
+if hidEl == "true" then
+el:text("More Elements: OFF")
+else
+el:text("More Elements: ON")
+end
+end
+end
+tpt.register_keypress(toggle)
+tpt.el.vrsg.menu=1
+tpt.el.vrsg.menusection=6
+tpt.el.mort.menu=1
+tpt.el.mort.menusection=6
+tpt.el.embr.menu=1
+tpt.el.embr.menusection=6
+tpt.el.vrss.menu=1
+tpt.el.vrss.menusection=9
