@@ -1,6 +1,5 @@
 --Copyleft 2014-2021 Gamerweb Incorporated
 --This code can be copied in any way needed.
-local ver = "ver1"
 local menus = Window:new(80,60,400,150)
 local SETTINGPATH = "PowderPlus"
 local NEWFOLD = "/"
@@ -166,7 +165,7 @@ while req:status() == "running" do
     socket.sleep(0.1)
 end
 local test = req:finish()
-if ver ~= test then
+if test = ver3 then
 local t2 = test
 local req = http.get("https://raw.githubusercontent.com/gamerwebteam/powderplus/main/test.txt")
 while req:status() == "running" do
@@ -176,8 +175,8 @@ local test = req:finish()
 f=io.open("scripts/powderplus.lua","w")
 f:write(test)
 f:close()
-print("Current Version:"..ver)
-print("New Version:"..t2)
+print("Current Version: ver2")
+print("New Version: ver3")
 print("PowderPlus has updated. To apply the updates,")
 print("go to the script manager, and untick this version of PowderPlus.")
 print("Then, tick powderplus.lua and restart.")
