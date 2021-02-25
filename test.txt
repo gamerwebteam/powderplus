@@ -148,7 +148,7 @@ fs.makeDirectory(SETTINGPATH)
 end
 if not fs.exists(SETTINGPATH..NEWFOLD.."fpsop.pplus") then
 f=io.open(SETTINGPATH..NEWFOLD.."fpsop.pplus","w")
-f:write("24")
+f:write("55")
 f:close()
 end
 if not fs.exists(SETTINGPATH..NEWFOLD.."elementshid.pplus") then
