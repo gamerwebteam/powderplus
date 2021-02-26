@@ -1,4 +1,64 @@
 --Copyleft Gamerweb Inc 2014-2021
+coalBurn = function(i, x, y, s, n)
+	local clife = tpt.get_property('life', x, y)
+	if clife > 120 then
+		for cx = -1, 1, 2 do
+			for cy = -1, 1, 2 do
+				tpt.create(x + cx, y + cy, 'fire')
+				tpt.set_property('temp', 1000, x, y)
+			end
+		end
+		tpt.set_property('life', clife - 1, x, y)
+	elseif clife == 120 then
+		tpt.set_property('type', 0, x, y)
+	elseif s > 0 then
+		for cx = -1, 1 do
+			for cy = -1, 1 do
+				if tpt.get_property('type', x + cx, y + cy) == 4 or tpt.get_property('type', x + cx, y + cy) == 49 then
+					tpt.set_property('life', 170, x, y)
+					return true
+				end
+			end
+		end
+	end
+end
+local ntgs = elements.allocate("PLUS", "NTGS")
+elements.element(elements.PLUS_PT_NTGS, elements.element(elements.DEFAULT_PT_CO2))
+elements.property(elements.PLUS_PT_NTGS, "Name", "NTGS")
+elements.property(elements.PLUS_PT_NTGS, "Description", "Natural Gas. Highly flammable gas which burns for a while.")
+elements.property(elements.PLUS_PT_NTGS, "Colour", 0xb00000)
+elements.property(elements.PLUS_PT_NTGS, "MenuSection", 5)
+elements.property(elements.PLUS_PT_NTGS, "Weight", 5)
+elements.property(elements.PLUS_PT_NTGS, "Flammable", 0)
+elements.property(elements.PLUS_PT_NTGS, "HighTemperature", 99999)
+elements.property(elements.PLUS_PT_NTGS, "HeatConduct", 0)
+tpt.element_func(coalBurn, tpt.element('NTGS'))
+local fwll = elements.allocate("PLUS", "FWLL")
+elements.element(elements.PLUS_PT_FWLL, elements.element(elements.DEFAULT_PT_TTAN))
+elements.property(elements.PLUS_PT_FWLL, "Name", "FWLL")
+elements.property(elements.PLUS_PT_FWLL, "Description", "Fake wall. Acts like WALL but is still an element. Conducts electricity.")
+elements.property(elements.PLUS_PT_FWLL, "Colour", 0xb0b0b0)
+elements.property(elements.PLUS_PT_FWLL, "MenuSection", 11)
+elements.property(elements.PLUS_PT_FWLL, "Flammable", 0)
+elements.property(elements.PLUS_PT_FWLL, "Explosive", 0)
+elements.property(elements.PLUS_PT_FWLL, "Weight", 5000)
+elements.property(elements.PLUS_PT_FWLL, "HighTemperature", 99999)
+elements.property(elements.PLUS_PT_FWLL, "HeatConduct", 0)
+local thmp = elements.allocate("PLUS", "THMP")
+elements.element(elements.PLUS_PT_THMP, elements.element(elements.DEFAULT_PT_GEL))
+elements.property(elements.PLUS_PT_THMP, "Name", "THMP")
+elements.property(elements.PLUS_PT_THMP, "Description", "Thermal paste. Basically liquid HEAC.")
+elements.property(elements.PLUS_PT_THMP, "Colour", 0xb0b0b0)
+elements.property(elements.PLUS_PT_THMP, "MenuSection", 7)
+elements.property(elements.PLUS_PT_THMP, "Flammable", 0)
+elements.property(elements.PLUS_PT_THMP, "Explosive", 0)
+elements.property(elements.PLUS_PT_THMP, "Weight", 20)
+elements.property(elements.PLUS_PT_THMP, "Gravity", 0.1)
+elements.property(elements.PLUS_PT_THMP, "Loss", 0.7)
+elements.property(elements.PLUS_PT_THMP, "Advection", 0.2)
+elements.property(elements.PLUS_PT_THMP, "HighTemperature", 1040)
+elements.property(elements.PLUS_PT_THMP, "HeatConduct", 251)
+elements.property(elements.PLUS_PT_THMP, "HighTemperatureTransition", elements.DEFAULT_PT_IRON)
 local bomb1 = elements.allocate("PLUS", "DYNA")
 elements.element(elements.PLUS_PT_DYNA, elements.element(elements.DEFAULT_PT_WOOD))
 elements.property(elements.PLUS_PT_DYNA, "Name", "DYNM")
@@ -31,7 +91,7 @@ elements.property(elements.PLUS_PT_TACO, "Colour", 0xaa00ff)
 elements.property(elements.PLUS_PT_TACO, "MenuSection", 5)
 elements.property(elements.PLUS_PT_TACO, "Flammable", 555)
 elements.property(elements.PLUS_PT_TACO, "Explosive", 270)
-elements.property(elements.PLUS_PT_TACO, "Weight", 100)
+elements.property(elements.PLUS_PT_TACO, "Weight", 50)
 elements.property(elements.PLUS_PT_TACO, "HighTemperature", 550)
 elements.property(elements.PLUS_PT_TACO, "HeatConduct", 100)
 elements.property(elements.PLUS_PT_TACO, "HighTemperatureTransition", elements.DEFAULT_PT_FIRE)
@@ -79,7 +139,7 @@ elements.property(elements.PLUS_PT_PNKE, "Colour", 0xa0a0a0)
 elements.property(elements.PLUS_PT_PNKE, "MenuSection", 5)
 elements.property(elements.PLUS_PT_PNKE, "Flammable", 2)
 elements.property(elements.PLUS_PT_PNKE, "Explosive", 1000)
-elements.property(elements.PLUS_PT_PNKE, "Weight", 100)
+elements.property(elements.PLUS_PT_PNKE, "Weight", 30)
 elements.property(elements.PLUS_PT_PNKE, "HighTemperature", 340)
 elements.property(elements.PLUS_PT_PNKE, "HeatConduct", 10000)
 elements.property(elements.PLUS_PT_PNKE, "HighTemperatureTransition", elements.DEFAULT_PT_DEST)
