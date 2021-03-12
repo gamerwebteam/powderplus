@@ -1,4 +1,38 @@
 --Copyleft Gamerweb Inc 2014-2021
+heatbattery = function(i, x, y)
+	local explode = tpt.get_property('life', x, y)
+	if explode == 0 then
+		tpt.set_property('life', 500, x, y)
+		tpt.set_property('tmp', 50, x, y)
+		tpt.set_property('ctype', 300, x, y)
+	end
+	local heatsto = tpt.get_property('tmp', x, y)
+	local mheat = tpt.get_property('ctype', x, y)
+	local temper = tpt.get_property('temp', x, y)
+	if temper < mheat then
+		if heatsto > 0 then
+			tpt.set_property('temp', temper + 5, x, y)
+		tpt.set_property('tmp', heatsto - 1, x, y)
+		else
+			tpt.set_property('temp', temper + 1, x, y)
+			tpt.set_property('life', explode - 6, x, y)
+end
+end
+	if temper > mheat then
+		tpt.set_property('temp', temper - 5, x, y)
+		tpt.set_property('tmp', heatsto + 1, x, y)
+	end
+	local heatsto = tpt.get_property('tmp', x, y)
+	local explode = tpt.get_property('life', x, y)
+if heatsto > 333 then
+	heatsto = 333
+	tpt.set_property('life', explode - 7, x, y)
+end
+if explode < 0 then
+	tpt.set_property('type', 'dest', x, y)
+	tpt.set_property('temp', 10000, x, y)
+end
+end
 coalBurn = function(i, x, y, s, n)
 	local clife = tpt.get_property('life', x, y)
 	if clife > 120 then
@@ -143,3 +177,13 @@ elements.property(elements.PLUS_PT_PNKE, "Weight", 30)
 elements.property(elements.PLUS_PT_PNKE, "HighTemperature", 340)
 elements.property(elements.PLUS_PT_PNKE, "HeatConduct", 10000)
 elements.property(elements.PLUS_PT_PNKE, "HighTemperatureTransition", elements.DEFAULT_PT_DEST)
+local bomb8 = elements.allocate("PLUS", "HBAT")
+elements.element(elements.PLUS_PT_HBAT, elements.element(elements.DEFAULT_PT_DMND))
+elements.property(elements.PLUS_PT_HBAT, "Name", "HBAT")
+elements.property(elements.PLUS_PT_HBAT, "Description", "Heat battery. Set desired temperature in ctype.")
+elements.property(elements.PLUS_PT_HBAT, "Colour", 0x9090e0)
+elements.property(elements.PLUS_PT_HBAT, "MenuSection", 5)
+elements.property(elements.PLUS_PT_HBAT, "Weight", 100)
+elements.property(elements.PLUS_PT_HBAT, "Temperature", 310)
+elements.property(elements.PLUS_PT_HBAT, "HeatConduct", 200)
+tpt.element_func(heatbattery, tpt.element('HBAT'))
