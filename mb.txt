@@ -33,6 +33,35 @@ if explode < 0 then
 	tpt.set_property('temp', 10000, x, y)
 end
 end
+bombClone = function(i, x, y, s, n)
+	local clife = tpt.get_property('life', x, y)
+	if clife > 120 then
+		for cx = -1, 1, 2 do
+			for cy = -1, 1, 2 do
+				tpt.create(x + cx, y + cy, 'thdr')
+				tpt.set_property('temp', 10900, x, y)
+			end
+		end
+		for cx = -2, 2, 2 do
+			for cy = -2, 2, 2 do
+				tpt.create(x + cx, y + cy, 'dest')
+				tpt.set_property('temp', 10900, x, y)
+			end
+		end
+		tpt.set_property('life', clife - 1, x, y)
+	elseif clife == 120 then
+		tpt.set_property('type', 0, x, y)
+	elseif s > 0 then
+		for cx = -1, 1 do
+			for cy = -1, 1 do
+				if tpt.get_property('type', x + cx, y + cy) == 4 or tpt.get_property('type', x + cx, y + cy) == 49 then
+					tpt.set_property('life', 170, x, y)
+					return true
+				end
+			end
+		end
+	end
+end
 coalBurn = function(i, x, y, s, n)
 	local clife = tpt.get_property('life', x, y)
 	if clife > 120 then
@@ -187,3 +216,15 @@ elements.property(elements.PLUS_PT_HBAT, "Weight", 100)
 elements.property(elements.PLUS_PT_HBAT, "Temperature", 310)
 elements.property(elements.PLUS_PT_HBAT, "HeatConduct", 200)
 tpt.element_func(heatbattery, tpt.element('HBAT'))
+local bomb7 = elements.allocate("PLUS", "NUKE")
+elements.element(elements.PLUS_PT_NUKE, elements.element(elements.DEFAULT_PT_DMND))
+elements.property(elements.PLUS_PT_NUKE, "Name", "NUKE")
+elements.property(elements.PLUS_PT_NUKE, "Description", "Nuke. Kiss whatever you use it on goodbye.")
+elements.property(elements.PLUS_PT_NUKE, "Colour", 0x0ab9c1)
+elements.property(elements.PLUS_PT_NUKE, "MenuSection", 5)
+elements.property(elements.PLUS_PT_NUKE, "Flammable", 2)
+elements.property(elements.PLUS_PT_NUKE, "Weight", 30)
+elements.property(elements.PLUS_PT_PNKE, "HighTemperature", 340)
+elements.property(elements.PLUS_PT_PNKE, "HeatConduct", 10000)
+elements.property(elements.PLUS_PT_PNKE, "HighTemperatureTransition", elements.DEFAULT_PT_THDR)
+tpt.element_func(bombClone, tpt.element('NUKE'))
